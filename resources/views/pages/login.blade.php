@@ -26,20 +26,22 @@
                             <!-- login -->
                             <div role="tabpanel"
                                 class="tab-content p-10 block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                                <form class="w-full max-w-md mx-auto" action="/signin" method="POST">
+                                <form class="w-full max-w-md mx-auto" action="{{ route('login') }}" method="POST">
+                                    @csrf
+                                    {{-- @method('PUT') --}}
                                     <div class="relative flex items-center">
                                         <span class="absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 class="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                             </svg>
                                         </span>
 
-                                        <input type="text" name="email_username"
+                                        <input type="email" name="email"
                                             class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                            placeholder="Username" required>
+                                            placeholder="Email" required>
                                     </div>
 
                                     <div class="relative flex items-center mt-4">
@@ -78,8 +80,9 @@
                             <!-- sign up -->
                             <div role="tabpanel"
                                 class="tab-content p-10 block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                                <form class="w-full max-w-md mx-auto" action="/register" method="POST"
+                                <form class="w-full max-w-md mx-auto" action="{{ route('register') }}" method="POST"
                                     enctype="multipart/form-data">
+                                    @csrf
                                     <div class="relative flex items-center">
                                         <span class="absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -277,5 +280,13 @@
         </div>
     </div>
 </section> --}}
-
+{{-- @if (@session('success'))
+    <script>
+        Swal.fire({
+            title: "Done",
+            text: "Your data has been submitted successfully",
+            icon: "success"
+        });
+    </script>
+@endif --}}
 @include('layouts.footer')

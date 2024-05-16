@@ -1,11 +1,21 @@
-{{-- @yield('header') --}}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    @include('layouts.header')
+</head>
 
-{{-- @yield('navbar') --}}
+<body>
+    <nav class="navbar bg-base-100 w-full fixed top-0 h-10 z-50 shadow-lg overflow-hidden">
+        @include('layouts.navbar')
+    </nav>
+    <div class="flex gap-2 max-w-7xl mt-20 mb-5 mx-auto">
+        @include('pages.leftSide')
+        @yield('home')
+        @include('pages.rightSide')
+    </div>
 
-{{-- @yield('layouts.home') --}}
-{{-- @yield('footer') --}}
-@include('layouts.header')
-@include('layouts.navbar')
-@include('layouts.home')
-@include('layouts.footer')
+    @include('layouts.footer')
+</body>
+
+</html>

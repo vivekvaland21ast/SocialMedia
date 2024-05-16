@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profiles;
 use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
@@ -27,7 +28,7 @@ class ProfilesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
     }
 
     /**
