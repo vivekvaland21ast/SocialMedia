@@ -39,25 +39,15 @@ class PostsController extends Controller
         if ($request->hasFile('imageFile')) {
             // Store the image
             $imageName = time() . '_' . $request->file('imageFile')->getClientOriginalName();
-            $imagePath = $request->file('imageFile')->move(public_path('post_images'), $imageName);
-
-            // $imagePath = $request->file('imagePath');
-            // $imageName = time() . '_' . $imagePath->getClientOriginalName();
-            // $imagePath->move(public_path('post_images'), $imageName);
-
-            // Create the post
-            $post = new Posts();
-            $post->post_caption = $request->captionText;
-            $post->post_image = $imageName;
-            $post->user_id = auth()->id();
-            $post->save();
-        } else {
-            // Handle case where no file is uploaded
-            $post = new Posts();
-            $post->post_caption = $request->captionText;
-            $post->user_id = auth()->id();
-            $post->save();
+            $request->file('imageFile')->move(public_path('post_images'), $imageName);
         }
+        // Create the post
+        $post = new Posts();
+        $post->post_caption = $request->captionText;
+        $post->post_image = $imageName ?? null;
+        $post->user_id = auth()->id();
+        $post->save();
+
 
         // Redirect or return a response
         return redirect()->back()->with('success', 'Post created successfully.');
@@ -92,6 +82,13 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Posts::find($id);
+
+        if ($post) {
+            $post->delete();
+            return redirect()->route('profile')->with('success', 'Post deleted successfully');
+        } else {
+            return redirect()->route('profile')->with('error', 'Post not found');
+        }
     }
 }

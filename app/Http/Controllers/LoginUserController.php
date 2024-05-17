@@ -21,12 +21,14 @@ class LoginUserController extends Controller
             return redirect()->intended('/home');
         }
 
-        return redirect('/login')->with('error', 'Invalid credentials. Please try again.');
+        return redirect('/login')->withErrors(['error' => 'Invalid credentials. Please try again.']);;
     }
 
     public function logout()
     {
         Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
         return redirect('/');
     }
 

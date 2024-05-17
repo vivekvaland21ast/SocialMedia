@@ -8,19 +8,6 @@ use App\Http\Controllers\RegisterUserController;
 use Illuminate\Support\Facades\Route;
 
 
-//middleware
-// Route::get('/home', function () {
-//     return view('home');
-// })->middleware('custom.auth')->name('home');
-
-
-// Route::get('/user', function () {
-//     return "hello logged in";
-// });
-
-//homepage
-Route::get('/home', [HomeController::class, 'homeShow']);
-
 // Login routes
 Route::get('/', [LoginUserController::class, 'loginShow']);
 Route::post('/login', [LoginUserController::class, 'login'])->name('login');
@@ -31,5 +18,25 @@ Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
 // Registration route
 Route::post('/register', [RegisterUserController::class, 'userRegister'])->name('register');
 
-//upload post
-Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
+
+// Protected routes
+Route::middleware('auth')->group(function () {
+    //home page
+    Route::get('/home', [HomeController::class, 'homeShow']);
+
+    //upload post
+    Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
+
+    //profile page
+    Route::get('/profile', [ProfilesController::class, 'showProfile'])->name('profile');
+
+    //like dislike
+    Route::post('/post/{post}/like', 'PostLikeController@like')->name('post.like');
+    Route::post('/post/{post}/dislike', 'PostLikeController@dislike')->name('post.dislike');
+
+
+
+
+});
+
+Route::delete('/posts/{id}', [PostsController::class, 'destroy'])->name('posts.destroy');

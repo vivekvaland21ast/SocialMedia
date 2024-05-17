@@ -12,8 +12,20 @@ class Posts extends Model
     protected $fillable = ['post_caption', 'post_image', 'user_id'];
     protected $table = 'posts';
 
-    public function user()
+    public function profile()
+    {
+        return $this->belongsTo(Profiles::class, 'user_id');
+    }
+    // Post.php
+    public function likes()
+    {
+        return $this->hasMany(Likes::class);
+    }
+
+    // Like.php
+    public function post()
     {
         return $this->belongsTo(Profiles::class);
     }
+
 }

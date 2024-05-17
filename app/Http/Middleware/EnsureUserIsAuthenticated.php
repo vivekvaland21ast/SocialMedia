@@ -16,8 +16,15 @@ class EnsureUserIsAuthenticated
      */
     public function handle(Request $request, Closure $next)
     {
+
         if (!Auth::check()) {
-            return redirect()->route('login')->withErrors(['You must be logged in to access this page.']);
+            // If the user is not authenticated, redirect to the login page
+            return redirect()->route('login')->withErrors(['error' => 'You must be logged in to access this page.']);
+        }
+
+        // If the user is authenticated and tries to access login or register routes, redirect to home
+        if (Auth::check() && ($request->routeIs('login') || $request->routeIs('register'))) {
+            return redirect()->route('home');
         }
 
         return $next($request);

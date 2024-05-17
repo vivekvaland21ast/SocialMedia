@@ -2,64 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Posts;
 use App\Models\Profiles;
+use Auth;
 use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function showProfile()
     {
-        //
-    }
+        $userId = Auth::id();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // Retrieve posts for the authenticated user with their profile
+        $posts = Posts::with('profile')
+            ->where('user_id', $userId) // Assuming 'user_id' is the foreign key in the 'posts' table
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-       
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('pages.profile', compact('posts'));
+        // return $posts;
     }
 }

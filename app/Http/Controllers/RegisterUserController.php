@@ -11,17 +11,20 @@ class RegisterUserController extends Controller
     public function userRegister(Request $request)
     {
         // dd($request->all());
-        // $request->validate([
-        //     'fullname' => 'required|string',
-        //     'username' => 'required|string',
-        //     'email' => 'required|email|unique:profiles,email',
-        //     'password' => 'required',
-        //     // 'profileImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        // ]);
+        $request->validate([
+            'fullname' => 'required|string',
+            'username' => 'required|string',
+            'email' => 'required|email|unique:profiles,email',
+            'password' => 'required',
+            // 'profileImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
         $profileImage = $request->file('profileImage');
         $imageName = time() . '_' . $profileImage->getClientOriginalName();
         $profileImage->move(public_path('profile_images'), $imageName);
+
+        // $profileImage = time() . '_' . $request->file('profileImage')->getClientOriginalName();
+        // $imageName = $request->file('profileImage')->move(public_path('profile_images'), $profileImage);
 
 
         Profiles::create([

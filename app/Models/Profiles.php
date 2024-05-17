@@ -22,4 +22,9 @@ class Profiles extends AuthenticatableUser implements Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(Posts::class, 'user_id');
+    }
 }
