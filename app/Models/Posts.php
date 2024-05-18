@@ -19,13 +19,13 @@ class Posts extends Model
     // Post.php
     public function likes()
     {
-        return $this->hasMany(Likes::class);
+        return $this->hasMany(Likes::class, 'post_id');
     }
 
-    // Like.php
-    public function post()
-    {
-        return $this->belongsTo(Profiles::class);
-    }
+    // // Like.php
+    // public function post()
+    // {
+    //     return $this->belongsTo(Profiles::class);
+    // }
 
 }

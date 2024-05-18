@@ -13,7 +13,16 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        // $profile= Profiles::all();
+        // $profiles = Profiles::with('posts')->get();
+        // $posts = Posts::all();
+        $posts = Posts::with('profile','likes')->orderBy('created_at', 'desc')->get();
+        // dd($posts);
+        return view('index', compact('posts'));
+
+        // $posts = Posts::orderBy('created_at', 'desc')->get();
+        // return view('posts.index', compact('posts'));
+        // return $posts;
     }
 
     /**
@@ -29,28 +38,32 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request
-        $request->validate([
-            'captionText' => 'required|string',
-            'imageFile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust validation rules as needed
-        ]);
+        $imageName = null;
 
-        // Check if file is uploaded
+        // Check if the file is uploaded
         if ($request->hasFile('imageFile')) {
-            // Store the image
+            // Store the image with a unique name to avoid overwriting existing files
             $imageName = time() . '_' . $request->file('imageFile')->getClientOriginalName();
             $request->file('imageFile')->move(public_path('post_images'), $imageName);
         }
-        // Create the post
+
+        // Create the post and associate it with the authenticated user
         $post = new Posts();
-        $post->post_caption = $request->captionText;
-        $post->post_image = $imageName ?? null;
+        $post->post_caption = $request->input('captionText', ''); // Default to an empty string if not provided
+        $post->post_image = $imageName;
         $post->user_id = auth()->id();
         $post->save();
 
-
         // Redirect or return a response
         return redirect()->back()->with('success', 'Post created successfully.');
+
+        // $post->load('profile'); // Eager load profile relationship
+
+        // // Render the post HTML
+        // $postHtml = view('postList.post', compact('post'))->render();
+
+        // // Return a JSON response
+        // return response()->json(['success' => 'Post created successfully.', 'postHtml' => $postHtml]);
     }
 
     /**
@@ -61,25 +74,30 @@ class PostsController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function edit($id)
     {
-        //
+        // $post = Posts::find($id);
+        // return view('profile', compact('post'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $post = Posts::find($id);
+        if (!$post) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+        $post->post_caption = $request->captionText;
+        if ($request->hasFile('imageFile')) {
+            $file = $request->file('imageFile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('post_images'), $fileName);
+            $post->post_image = $fileName;
+        }
+        $post->save();
+        return redirect('/profile');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $post = Posts::find($id);

@@ -4,13 +4,13 @@
         <div class="popup bg-gray-800 modal-box dialog flex flex-col items-center">
             <div class="close-btn btn btn-md btn-circle btn-ghost absolute right-2 top-2" onclick="closeImagePopup()">✕
             </div>
-            <img id="popupImage" class="popup-image" src="{{ asset('post_images/' . $post->post_image) }}"
+            <img id="popupImage" class="popup-image" src="{{ asset('post_images/' . $post->post_caption) }}"
                 alt="popup-image">
             <div class="font-semibold text-md mt-2 text-red-500">
                 <span class="font-semibold text-md text-warning">
                     {{ $post->profile->username }}
                 </span>
-                <span class="text-sm text-gray-300">
+                <span id="popupCaption" class="text-sm text-gray-300">
                     {{ $post->post_caption }}
                 </span>
             </div>
@@ -26,7 +26,7 @@
         <div class="flex justify-center py-5">
             <!-- Eye icon -->
             <div class="text-center w-5 h-5 cursor-pointer mx-4"
-                onclick="showImagePopup('{{ asset('post_images/' . $post->post_image) }}')">
+                onclick="showImagePopup('{{ asset('post_images/' . $post->post_image) }}', '{{ $post->post_caption }}')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="w-full h-full">
                     <path fill="#74C0FC"
                         d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z" />
@@ -67,23 +67,24 @@
                     </div>
                 </form>
                 <h3 class="font-bold text-lg">Update your post</h3>
-                <form class="p-4 md:p-5" method="POST" action="/update?id={{ $post->id }}"
-                    enctype="multipart/form-data">
+                <div id="message"></div>
+                <form id="updateForm" class="p-4 md:p-5" action="{{ route('posts.update', $post->id) }}"
+                    enctype="multipart/form-data" method="POST">
+                    @csrf
+                    @method('PUT')
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
-                            <!-- <label for="name"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label> -->
-                            <input type="file" name="imageFile"
-                                value="{{ asset('profile_images/' . $currentUser->profile) }}"
+                            <input type="file" name="imageFile" id="imageFile"
+                                value="{{ asset('profile_images/' . $post->profile) }}"
                                 class="file-input file-input-bordered file-input-primary w-full file-input-sm max-w-xs" />
                         </div>
                         <div class="col-span-2">
-                            <textarea id="description" rows="4" name="captionText"
+                            <textarea id="captionText" rows="4" name="captionText"
                                 class="textarea textarea-primary block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-blue-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="What's on your mind!!!">{{ $currentUser->post_caption }}</textarea>
+                                placeholder="What's on your mind!!!" value="">{{ $post->post_caption }}</textarea>
                         </div>
                     </div>
-                    <button type="submit" name="update_post"
+                    <button type="submit" name="update_post" id="update_data" value="{{ $post->id }}"
                         class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -100,15 +101,14 @@
 @endforeach
 {{-- @endif --}}
 
-
-
-
 <script>
-    function showImagePopup(imageSrc) {
+    function showImagePopup(imageSrc, caption) {
         var popup = document.getElementById('imagePopup');
         var popupImage = document.getElementById('popupImage');
+        var popupCaption = document.getElementById('popupCaption');
 
         popupImage.src = imageSrc;
+        popupCaption.innerText = caption;
         popup.style.display = "flex";
     }
 
@@ -122,4 +122,31 @@
             document.getElementById('delete-post-form-' + postId).submit();
         }
     }
+
+
+    // $(document).ready(function() {
+    //     $('#updateForm').on('submit', function(e) {
+    //         e.preventDefault();
+
+    //         var formData = new FormData(this);
+    //         var post_id = form.data(post_id);
+    //         console.log(formData);
+    //         $.ajax({
+    //             url: $("#updateForm").attr("action"),
+    //             type: 'POST',
+    //             data: [form_data: formData, id: post_id],
+    //             contentType: false,
+    //             processData: false,
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             },
+    //             success: function(response) {
+    //                 console.log(response.success);
+    //             },
+    //             error: function(response) {
+    //                 alert('Error: ' + response.responseJSON.error);
+    //             }
+    //         });
+    //     });
+    // });
 </script>

@@ -5,7 +5,7 @@
     <!-- Reduced height -->
 
 </div>
-<div class="navbar-center hidden lg:flex text-3xl font-semibold cursor-pointer"><a href="/home">
+<div class="navbar-center hidden lg:flex text-3xl font-semibold cursor-pointer"><a href="{{ route('posts.home') }}">
         <span class="text-primary">S</span>ocial<span class="text-secondary">M</span>ate
     </a>
 </div>
@@ -97,12 +97,34 @@
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
             <h3 class="font-bold text-lg">Upload your post</h3>
-            <form id="postForm" class="p-4 md:p-5" enctype="multipart/form-data">
+            {{-- <form id="postForm" class="p-4 md:p-5" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 grid-cols-2">
                     <div class="col-span-2">
-                        <!-- <label for="name"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label> -->
+                        <input type="file" name="imageFile"
+                            class="file-input file-input-bordered file-input-primary w-full file-input-sm max-w-xs" />
+                    </div>
+                    <div class="col-span-2">
+                        <textarea id="description" rows="4" name="captionText"
+                            class="textarea textarea-primary block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-blue-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="What's on your mind!!!"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="submitPost" class="btn btn-outline btn-primary">
+                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    Post
+                </button>
+            </form> --}}
+            <form id="postForm" class="p-4 md:p-5" action="{{ route('posts.store') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="grid gap-4 mb-4 grid-cols-2">
+                    <div class="col-span-2">
                         <input type="file" name="imageFile"
                             class="file-input file-input-bordered file-input-primary w-full file-input-sm max-w-xs" />
                     </div>
@@ -227,6 +249,41 @@
                 console.error(xhr.responseText);
                 alert("Error submitting post. Please try again.");
             },
+        });
+    });
+</script> --}}
+
+{{-- <script>
+    $(document).ready(function() {
+        $('#submitPost').click(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            var formData = new FormData($('#postForm')[0]);
+
+            $.ajax({
+                url: "{{ route('posts.store') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Append the new post to the list on the index page
+                        $('#postsList').prepend(response.postHtml);
+                        // Clear the form inputs
+                        $('#postForm')[0].reset();
+                        alert('Post created successfully.');
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function(response) {
+                    alert('Error creating post. Please try again.');
+                }
+            });
         });
     });
 </script> --}}

@@ -2,22 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Likes;
 use App\Models\Posts;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostLikeController extends Controller
 {
-    public function like(Posts $post)
+    public function toggleLike(Request $request)
     {
-        $post->increment('likes');
-        // Save like to database if you want to track who liked the post
-        return response()->json(['success' => true]);
+        $postId = $request->post_id;
+        $userId = auth()->id();
+
+        // Check if the user has already liked the post
+        $like = Likes::where('post_id', $postId)
+            ->where('user_id', $userId)
+            ->first();
+
+        $liked = false;
+
+        // Toggle like or unlike
+        if ($like) {
+            // If already liked, remove the like
+            $like->delete();
+        } else {
+            // If not liked, create a new like
+            Likes::create([
+                'user_id' => $userId,
+                'post_id' => $postId
+            ]);
+            $liked = true;
+        }
+
+        // Return total likes count for the post
+        $totalLikes = Likes::where('post_id', $postId)->count();
+        return response()->json(['total_likes' => $totalLikes, 'liked' => $liked]);
     }
 
-    public function dislike(Posts $post)
-    {
-        $post->increment('dislikes');
-        // Save dislike to database if you want to track who disliked the post
-        return response()->json(['success' => true]);
-    }
 }

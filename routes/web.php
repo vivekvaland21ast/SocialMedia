@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginUserController;
+use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RegisterUserController;
@@ -22,7 +23,7 @@ Route::post('/register', [RegisterUserController::class, 'userRegister'])->name(
 // Protected routes
 Route::middleware('auth')->group(function () {
     //home page
-    Route::get('/home', [HomeController::class, 'homeShow']);
+    Route::get('/home', [PostsController::class, 'index'])->name('posts.home');
 
     //upload post
     Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
@@ -34,9 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/{post}/like', 'PostLikeController@like')->name('post.like');
     Route::post('/post/{post}/dislike', 'PostLikeController@dislike')->name('post.dislike');
 
-
-
-
 });
 
 Route::delete('/posts/{id}', [PostsController::class, 'destroy'])->name('posts.destroy');
+
+Route::put('userData/{id}', [PostsController::class, 'update'])->name('posts.update');
+
+Route::post('/toggle-like', [PostLikeController::class, 'toggleLike'])->name('posts.toggle-like');
