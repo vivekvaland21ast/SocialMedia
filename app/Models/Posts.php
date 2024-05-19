@@ -22,11 +22,6 @@ class Posts extends Model
         return $this->hasMany(Likes::class, 'post_id');
     }
 
-    // // Like.php
-    // public function post()
-    // {
-    //     return $this->belongsTo(Profiles::class);
-    // }
 
     public function comments()
     {

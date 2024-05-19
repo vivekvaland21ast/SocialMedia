@@ -12,7 +12,7 @@
                     alt="Profile Image" />
                 <div class="py-2">
                     <h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1">
-                        {{ $currentUser->username }}
+                        {{ '@' . $currentUser->username }}
                     </h3>
                     <div class="inline-flex text-gray-700 dark:text-gray-300 items-center">
                         {{ $currentUser->full_name }}
@@ -24,11 +24,6 @@
                     class="flex-1 mr-2 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-semibold text-md hover:bg-blue-800 dark:hover:bg-blue-900 py-2">
                     View Profile
                 </button>
-
-                {{-- <button
-                    class="flex-1 rounded-full border-2 border-gray-400 dark:border-gray-700 font-semibold text-black text-sm dark:text-white py-2">
-                    Edit
-                </button> --}}
             </div>
         </div>
     </div>

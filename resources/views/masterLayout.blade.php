@@ -12,7 +12,7 @@
     <div class="flex gap-2 max-w-7xl mt-20 mb-5 mx-auto">
         @include('pages.leftSide')
         @yield('home')
-        @include('pages.rightSide')
+        {{-- @include('pages.rightSide') --}}
     </div>
 
     @include('layouts.footer')

@@ -33,4 +33,8 @@ class Profiles extends AuthenticatableUser implements Authenticatable
         return $this->hasMany(Comments::class);
     }
 
+    public function friend()
+    {
+        return $this->hasOne(Profiles::class, 'user_id');
+    }
 }

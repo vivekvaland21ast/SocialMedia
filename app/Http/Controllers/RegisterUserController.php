@@ -23,9 +23,6 @@ class RegisterUserController extends Controller
         $imageName = time() . '_' . $profileImage->getClientOriginalName();
         $profileImage->move(public_path('profile_images'), $imageName);
 
-        // $profileImage = time() . '_' . $request->file('profileImage')->getClientOriginalName();
-        // $imageName = $request->file('profileImage')->move(public_path('profile_images'), $profileImage);
-
 
         Profiles::create([
             'full_name' => $request->input('fullname'),
