@@ -45,29 +45,35 @@
 
     </label>
     <!-- notification -->
-    <div class="flex-none px-3">
-        <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                <div class="indicator">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                    <span class="badge badge-xs badge-primary indicator-item">8</span>
-                </div>
+    <details class="dropdown">
+        <summary class="m-1 btn btn-ghost btn-circle">
+            <div class="indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                <span class="badge badge-xs badge-primary indicator-item">8</span>
             </div>
-            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-                <div class="card-body">
-                    <span class="font-bold text-lg">Your notifications</span>
-                    <span class="text-info">Subtotal: $999</span>
-                    <div class="card-actions"><a href="Views/chat.view.php">
-                            <button class="btn btn-primary btn-block">View all</button></a>
+        </summary>
+        <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box" style="width: 300px; padding: 10px">
+            <div class='flex flex-col gap-3'>
+                <div class="relative border border-gray-200 rounded-lg shadow-lg">
+                    <div class="flex items-center p-4">
+                        <img class="object-cover w-12 h-12 rounded-lg" src="user profile" alt="" />
+                        <div class="ml-3 overflow-hidden">
+                            <p class="font-medium text-white-900">user name</p>
+                            <p class="max-w-xs text-sm text-gray-500 truncate">
+                                user liked your post
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </ul>
+    </details>
+
+    {{-- Logout --}}
     <form method="POST" action="{{ route('logout') }}">
         @csrf
         <button type='submit' class='btn btn-outline btn-error'>Logout</button>
@@ -78,17 +84,6 @@
             <img src="{{ asset('profile_images/' . $currentUser->profile) }}"
                 class="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto" alt="Profile Image" />
         </div>
-        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li>
-                <a>
-                    <!-- <a class="justify-between"> -->
-                    Profile
-                    <!-- <span class="badge">New</span> -->
-                </a>
-            </li>
-            <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
-        </ul>
     </div>
     <!-- Main modal -->
     <dialog id="my_modal_3" class="modal">

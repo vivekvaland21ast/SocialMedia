@@ -11,6 +11,13 @@
     /* Firefox */
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+    width: 0;
+    /* Remove scrollbar */
+    background: transparent;
+    /* Transparent background */
+}
+
 .popup-overlay {
     position: fixed;
     top: 0;

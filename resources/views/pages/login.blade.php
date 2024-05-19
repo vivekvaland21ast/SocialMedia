@@ -3,6 +3,11 @@
 <section class="bg-white dark:bg-gray-900 flex items-center justify-center min-h-screen">
     <div class="container flex items-center justify-center px-6 mx-auto">
         <!-- <div role="tablist" class="tabs tabs-bordered flex items-center justify-center mt-6"> -->
+        <div class="navbar-center  hidden lg:flex text-8xl z-30 flex-auto text-center font-semibold cursor-pointer">
+            <a class="ml-5">
+                <span class="text-primary">S</span>ocial<span class="text-secondary">M</span>ate
+            </a>
+        </div>
         <div class="w-full flex justify-center">
             <div class="w-full md:w-1/2">
                 <div class="relative">
@@ -129,7 +134,7 @@
 
                                         <input type="text" name="username"
                                             class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                            placeholder="Username" >
+                                            placeholder="Username">
                                     </div>
                                     @error('username')
                                         <div class="text-sm text-red-600 mt-1">{{ $message }}</div>
@@ -180,7 +185,7 @@
                                         <h2 class="mx-3 text-gray-400">Profile Photo</h2>
 
                                         <input id="dropzone-file" name="profileImage" type="file"
-                                            class="hidden"  />
+                                            class="hidden" />
                                     </label>
                                     @error('profileImage')
                                         <div class="text-sm text-red-600 mt-1">{{ $message }}</div>

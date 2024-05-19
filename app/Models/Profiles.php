@@ -27,4 +27,10 @@ class Profiles extends AuthenticatableUser implements Authenticatable
     {
         return $this->hasMany(Posts::class, 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
+
 }

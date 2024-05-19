@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginUserController;
+use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfilesController;
@@ -42,3 +43,6 @@ Route::delete('/posts/{id}', [PostsController::class, 'destroy'])->name('posts.d
 Route::put('userData/{id}', [PostsController::class, 'update'])->name('posts.update');
 
 Route::post('/toggle-like', [PostLikeController::class, 'toggleLike'])->name('posts.toggle-like');
+
+Route::post('/comments', [PostCommentsController::class, 'store'])->name('comments.store');
+Route::get('/comments/{postId}', [PostCommentsController::class, 'fetchComments'])->name('comments.fetch');
