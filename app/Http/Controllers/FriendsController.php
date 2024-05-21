@@ -99,37 +99,37 @@ class FriendsController extends Controller
         return view('friends', ['friends' => $friends]);
     }
 
-    public function addFriend(Request $request)
-    {
-        $friendId = $request->input('friend_id');
-        $user = Auth::user();
+    // public function addFriend(Request $request)
+    // {
+    //     $friendId = $request->input('friend_id');
+    //     $user = Auth::user();
 
-        // Check if the friend exists
-        $friend = Profiles::find($friendId);
-        if (!$friend) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+    //     // Check if the friend exists
+    //     $friend = Profiles::find($friendId);
+    //     if (!$friend) {
+    //         return response()->json(['message' => 'User not found'], 404);
+    //     }
 
-        // Add the friend (you might need to adjust this based on your relationship setup)
-        $user->friends()->attach($friendId);
+    //     // Add the friend (you might need to adjust this based on your relationship setup)
+    //     $user->friends()->attach($friendId);
 
-        return response()->json(['message' => 'Friend added successfully']);
-    }
+    //     return response()->json(['message' => 'Friend added successfully']);
+    // }
 
-    public function removeFriend(Request $request)
-    {
-        $friendId = $request->input('friend_id');
-        $user = Auth::user();
+    // public function removeFriend(Request $request)
+    // {
+    //     $friendId = $request->input('friend_id');
+    //     $user = Auth::user();
 
-        // Check if the friend exists
-        $friend = Profiles::find($friendId);
-        if (!$friend) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+    //     // Check if the friend exists
+    //     $friend = Profiles::find($friendId);
+    //     if (!$friend) {
+    //         return response()->json(['message' => 'User not found'], 404);
+    //     }
 
-        // Remove the friend (you might need to adjust this based on your relationship setup)
-        $user->friends()->detach($friendId);
+    //     // Remove the friend (you might need to adjust this based on your relationship setup)
+    //     $user->friends()->detach($friendId);
 
-        return response()->json(['message' => 'Friend removed successfully']);
-    }
+    //     return response()->json(['message' => 'Friend removed successfully']);
+    // }
 }
