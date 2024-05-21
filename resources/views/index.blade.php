@@ -60,15 +60,8 @@
                 <!-- Card end -->
             @endforeach
         @endif
-
-        {{-- <div id="postsList" class="mt-4">
-            @if (isset($posts))
-                @foreach ($posts as $post)
-                    @include('pages.postList', ['post' => $post])
-                @endforeach
-            @endif
-        </div> --}}
     </div>
+    @include('pages.friendsList')
     <script>
         $(document).ready(function() {
             $('.toggle-like-btn').click(function() {

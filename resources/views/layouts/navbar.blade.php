@@ -13,7 +13,7 @@
 <!-- nav-end-menu -->
 <div class="navbar-end py-2">
     <!-- Search -->
-    <div class="form-control">
+    {{-- <div class="form-control">
         <input type="search" placeholder="Search" id="searchData" name="search"
             class="input input-bordered input-info w-full max-w-xs h-10" />
     </div>
@@ -24,7 +24,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
-    </button>
+    </button> --}}
     <!-- theme -->
     <label class="swap swap-rotate px-1">
 
@@ -45,7 +45,7 @@
 
     </label>
     <!-- notification -->
-    <details class="dropdown">
+    {{-- <details class="dropdown">
         <summary class="m-1 btn btn-ghost btn-circle">
             <div class="indicator">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -71,13 +71,19 @@
                 </div>
             </div>
         </ul>
-    </details>
+    </details> --}}
 
     {{-- Logout --}}
     <form method="POST" action="{{ route('logout') }}">
         @csrf
         <button type='submit' class='btn btn-outline btn-error'>Logout</button>
     </form>
+
+    {{-- Search new --}}
+    <div class="px-4">
+        @include('pages.SearchNotification')
+    </div>
+
     <!-- Profile -->
     <div class="dropdown dropdown-end px-4">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">

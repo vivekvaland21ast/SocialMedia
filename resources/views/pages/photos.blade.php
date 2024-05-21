@@ -96,6 +96,18 @@
                 </form>
             </div>
         </dialog>
+
+        {{-- friend list model --}}
+        <input type="checkbox" id="my_modal_7" class="modal-toggle" />
+        <div class="modal" role="dialog">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">Added Friends</h3>
+                <ul id="added-friends-list">
+                    <!-- Friend items will be dynamically added here -->
+                </ul>
+            </div>
+            <label class="modal-backdrop" for="my_modal_7">Close</label>
+        </div>
     </div>
 @endforeach
 {{-- @endif --}}
@@ -122,6 +134,39 @@
         }
     }
 
+    // Function to load added friends into the modal
+    function loadAddedFriends() {
+        $.ajax({
+            url: "{{ route('get-added-friends') }}", // Replace with your route
+            type: 'GET',
+            success: function(response) {
+                var addedFriendsList = $('#added-friends-list');
+                addedFriendsList.empty(); // Clear previous friend list
+
+                // Loop through the friends and append them to the list
+                response.friends.forEach(function(friend) {
+                    addedFriendsList.append('<li>' + friend.full_name + ' (@' + friend.username +
+                        ')</li>');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Load added friends when the modal is opened
+    $('#my_modal_7').on('change', function() {
+        if ($(this).is(':checked')) {
+            loadAddedFriends();
+        }
+    });
+
+    //    Open modal on SVG icon click
+    $('#open-modal').click(function() {
+        $('#my_modal_7').prop('checked', true);
+        loadAddedFriends();
+    });
 
     // $(document).ready(function() {
     //     $('#updateForm').on('submit', function(e) {

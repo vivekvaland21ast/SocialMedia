@@ -19,11 +19,7 @@
                         {{ $currentUser->username }}
                     </h3>
                 </div>
-                <div>
-                    <button
-                        class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Edit
-                        Profile</button>
-                </div>
+                @include('pages.editProfile')
             </div>
 
             <div
@@ -46,17 +42,7 @@
                     </div>
                 </div>
 
-                <div class="stat">
-                    <div class="stat-figure text-warning">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            class="inline-block w-8 h-8 stroke-current">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <div class="stat-title font-semibold text-gray-200">Following</div>
-                    <div class="text-warning">2K</div>
-                </div>
+                @include('pages.myFriends')
 
                 <div class="stat">
                     <div class="stat-figure text-secondary">
@@ -69,13 +55,9 @@
                     </div>
                     <div class="stat-title font-semibold text-gray-200">Likes</div>
                     <div class="text-secondary">83
-
                     </div>
                 </div>
-
             </div>
-
-
         </div>
     </aside>
     <div class="p-4 sm:ml-64">

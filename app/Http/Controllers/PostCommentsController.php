@@ -32,4 +32,28 @@ class PostCommentsController extends Controller
         });
         return response()->json($comments);
     }
+
+    public function update(Request $request, Comments $comment)
+    {
+        // $this->authorize('update', $comment);
+
+        // $request->validate([
+        //     'body' => 'required|string|max:255',
+        // ]);
+
+        $comment->update([
+            'body' => $request->body,
+        ]);
+
+        return response()->json($comment);
+    }
+
+    public function destroy(Comments $comment)
+    {
+        // $this->authorize('delete', $comment);
+
+        $comment->delete();
+
+        return response()->json(['message' => 'Comment deleted']);
+    }
 }

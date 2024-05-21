@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Posts;
+use App\Models\Profiles;
+use Auth;
 use Hash;
 use Illuminate\Http\Request;
 
@@ -16,13 +18,10 @@ class PostsController extends Controller
         // $profile= Profiles::all();
         // $profiles = Profiles::with('posts')->get();
         // $posts = Posts::all();
-        $posts = Posts::with('profile','likes')->orderBy('created_at', 'desc')->get();
+        $posts = Posts::with('profile', 'likes')->orderBy('created_at', 'desc')->get();
         // dd($posts);
-        return view('index', compact('posts'));
-
-        // $posts = Posts::orderBy('created_at', 'desc')->get();
-        // return view('posts.index', compact('posts'));
-        // return $posts;
+        $friends = Profiles::where('id', '!=', Auth::id())->get();
+        return view('index', compact('posts', 'friends'));
     }
 
     /**

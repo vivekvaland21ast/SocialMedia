@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\PostCommentsController;
@@ -38,11 +39,25 @@ Route::middleware('auth')->group(function () {
 
 });
 
+//posts
 Route::delete('/posts/{id}', [PostsController::class, 'destroy'])->name('posts.destroy');
-
 Route::put('userData/{id}', [PostsController::class, 'update'])->name('posts.update');
 
+//likes
 Route::post('/toggle-like', [PostLikeController::class, 'toggleLike'])->name('posts.toggle-like');
 
+//comments
 Route::post('/comments', [PostCommentsController::class, 'store'])->name('comments.store');
 Route::get('/comments/{postId}', [PostCommentsController::class, 'fetchComments'])->name('comments.fetch');
+Route::put('/comments/{comment}', [PostCommentsController::class, 'update'])->name('comments.update');
+Route::delete('/comments/{comment}', [PostCommentsController::class, 'destroy'])->name('comments.destroy');
+
+//edit profile
+Route::post('/update-profile', [ProfilesController::class, 'updateProfile'])->name('updateProfile');
+
+//view friends
+// Route::get('/friendList', [ProfilesController::class, 'getFriends'])->name('friendList');
+
+//friend request
+Route::get('/friends', [FriendsController::class, 'showFriends'])->name('show-friends');
+Route::post('/toggle-friend', [FriendsController::class, 'toggleFriend'])->name('toggle-friend');
