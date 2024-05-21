@@ -10,10 +10,6 @@ class PostCommentsController extends Controller
 {
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'body' => 'required',
-        //     'post_id' => 'required|exists:posts,id',
-        // ]);
 
         Comments::create([
             'user_id' => Auth::id(),
@@ -31,29 +27,5 @@ class PostCommentsController extends Controller
             return $comment;
         });
         return response()->json($comments);
-    }
-
-    public function update(Request $request, Comments $comment)
-    {
-        // $this->authorize('update', $comment);
-
-        // $request->validate([
-        //     'body' => 'required|string|max:255',
-        // ]);
-
-        $comment->update([
-            'body' => $request->body,
-        ]);
-
-        return response()->json($comment);
-    }
-
-    public function destroy(Comments $comment)
-    {
-        // $this->authorize('delete', $comment);
-
-        $comment->delete();
-
-        return response()->json(['message' => 'Comment deleted']);
     }
 }

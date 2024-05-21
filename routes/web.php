@@ -49,15 +49,3 @@ Route::post('/toggle-like', [PostLikeController::class, 'toggleLike'])->name('po
 //comments
 Route::post('/comments', [PostCommentsController::class, 'store'])->name('comments.store');
 Route::get('/comments/{postId}', [PostCommentsController::class, 'fetchComments'])->name('comments.fetch');
-Route::put('/comments/{comment}', [PostCommentsController::class, 'update'])->name('comments.update');
-Route::delete('/comments/{comment}', [PostCommentsController::class, 'destroy'])->name('comments.destroy');
-
-//edit profile
-Route::post('/update-profile', [ProfilesController::class, 'updateProfile'])->name('updateProfile');
-
-//view friends
-// Route::get('/friendList', [ProfilesController::class, 'getFriends'])->name('friendList');
-
-//friend request
-Route::get('/friends', [FriendsController::class, 'showFriends'])->name('show-friends');
-Route::post('/toggle-friend', [FriendsController::class, 'toggleFriend'])->name('toggle-friend');
